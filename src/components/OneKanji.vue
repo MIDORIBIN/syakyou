@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <span>
     <!--ひらがな-->
     <template v-if="isHiragana">
       <template v-for="(hiragana, index) in kanji.hiraganaList">
@@ -10,13 +10,14 @@
     <template v-if="!isHiragana">
       <span>{{kanji.kanji}}</span>
     </template>
-  </div>
+  </span>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import OneHiragana from './OneHiragana.vue';
 import {sleep} from '../util/promise-util';
+import {sleepTime} from "../util/sleep-time";
 
 export default Vue.extend({
   components: {
@@ -24,6 +25,7 @@ export default Vue.extend({
   },
   props: {
     kanji: Object,
+    startFlag: Boolean,
   },
   data: () => ({
     resolveList: [] as Array<() => void>,
@@ -53,13 +55,20 @@ export default Vue.extend({
     },
     async endInputHiragana() {
       this.hiraganaToKanji();
-      await sleep(1);
+      await sleep(sleepTime);
       this.$emit('end');
     },
   },
   mounted() {
     this.initProgressList();
-    this.next();
+    // this.next();
+  },
+  watch: {
+    startFlag(f: boolean) {
+      if (f) {
+        this.next();
+      }
+    },
   },
 });
 </script>

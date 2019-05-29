@@ -8,6 +8,7 @@
 import Vue from 'vue';
 import {Hiragana} from '../entity/hiragana';
 import {sleep} from '../util/promise-util';
+import {sleepTime} from "../util/sleep-time";
 
 export default Vue.extend({
   props: {
@@ -17,11 +18,6 @@ export default Vue.extend({
   data: () => ({
     text: '',
   }),
-  computed: {
-    waitTime() {
-      return 1;
-    },
-  },
   methods: {
     start(hiragana: Hiragana): Promise<void> {
       return this.inputText(hiragana);
@@ -31,13 +27,13 @@ export default Vue.extend({
       const alphabetList = hiragana.hebon.split('').slice(0, -1);
       for (const alphabet of alphabetList) {
         this.text += alphabet;
-        await sleep(this.waitTime);
+        await sleep(sleepTime);
       }
 
       // ひらがな
       this.text = this.text.slice(0, -alphabetList.length);
       this.text += hiragana.hiragana;
-      await sleep(this.waitTime);
+      await sleep(sleepTime);
     },
   },
   watch: {

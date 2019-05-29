@@ -1,6 +1,9 @@
 <template>
   <div>
-    <OneKanji :kanji="kanji" @end="next"></OneKanji>
+    <!--<OneKanji :kanji="kanji" @end="next"></OneKanji>-->
+    <template v-for="(kanji, index) in kanjiList">
+      <OneKanji :kanji="kanji" :startFlag="progressList[index]" @end="next"></OneKanji>
+    </template>
   </div>
 </template>
 
@@ -15,12 +18,35 @@ export default Vue.extend({
     OneKanji,
   },
   data: () => ({
-    kanji: new Kanji('眼', [new Hiragana('ge', 'げ'), new Hiragana('nn', 'ん')]),
+    kanjiList: [
+      new Kanji('無', [new Hiragana('mu', 'む')]),
+      new Kanji('眼', [new Hiragana('ge', 'げ'), new Hiragana('nn', 'ん')]),
+    ],
+    progressList: [] as boolean[],
   }),
   methods: {
-    next() {
-      console.log('owaowa');
+    initProgressList() {
+      this.progressList = new Array<boolean>(this.kanjiList.length).fill(false);
     },
+    next() {
+      const nowIndex = this.searchNowIndex();
+      if (nowIndex >= this.kanjiList.length) {
+        // end
+        // this.endInputHiragana();
+        console.log('owaowa');
+        return;
+      }
+      this.progressList.splice(nowIndex, 1, true);
+    },
+    searchNowIndex(): number {
+      return this.progressList
+        .filter((flag: boolean) => flag)
+        .length;
+    },
+  },
+  mounted() {
+    this.initProgressList();
+    this.next();
   },
 });
 </script>
