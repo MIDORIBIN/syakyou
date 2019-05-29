@@ -1,21 +1,22 @@
 <template>
   <div>
+    <!--ひらがな-->
     <template v-if="isHiragana">
       <template v-for="(hiragana, index) in kanji.hiraganaList">
-        <OneHiragana :hiragana="hiragana" :promise="promiseList[index]" @end="next"></OneHiragana>
+        <OneHiragana :hiragana="hiragana" :startFlag="progressList[index]" @end="next"></OneHiragana>
       </template>
     </template>
+    <!--漢字-->
     <template v-if="!isHiragana">
       <span>{{kanji.kanji}}</span>
     </template>
-
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import OneHiragana from './OneHiragana.vue';
-import {Hiragana} from '../entity/hiragana';
+import {sleep} from "../util/promise-util";
 
 export default Vue.extend({
   components: {
@@ -26,36 +27,39 @@ export default Vue.extend({
   },
   data: () => ({
     resolveList: [] as Array<() => void>,
-    promiseList: [] as Array<Promise<number>>,
+    progressList: [] as boolean[],
     isHiragana: true,
   }),
   methods: {
-    inputHiragana() {
-      this.kanji.hiraganaList
-        .forEach((_: Hiragana, index: number) => {
-          this.createPromise(index);
-        });
+    initProgressList() {
+      // Array.prototype.push.apply(this.progressList, new Array<boolean>(this.kanji.hiraganaList.length).fill(false));
+      this.progressList = new Array<boolean>(this.kanji.hiraganaList.length).fill(false);
     },
-    createPromise(index: number) {
-      const promise = new Promise<number>((resolve: (num: number) => void) => {
-        this.resolveList.push(() => resolve(index));
-      });
-      this.promiseList.push(promise);
-    },
-    next(nowIndex: number) {
-      if (nowIndex >= this.kanji.hiraganaList.length - 1) {
-        this.hiraganaToKanji();
+    next() {
+      const nowIndex = this.searchNowIndex();
+      if (nowIndex >= this.kanji.hiraganaList.length) {
+        this.endInputHiragana();
         return;
       }
-      this.resolveList[nowIndex + 1]();
+      this.progressList.splice(nowIndex, 1, true);
+    },
+    searchNowIndex(): number {
+      return this.progressList
+        .filter((flag: boolean) => flag)
+        .length;
     },
     hiraganaToKanji() {
       this.isHiragana = false;
     },
+    async endInputHiragana() {
+      this.hiraganaToKanji();
+      await sleep(1);
+      this.$emit('end');
+    }
   },
   mounted() {
-    this.inputHiragana();
-    this.next(-1);
+    this.initProgressList();
+    this.next();
   },
 });
 </script>

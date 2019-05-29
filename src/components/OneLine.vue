@@ -18,8 +18,8 @@ export default Vue.extend({
     kanji: new Kanji('眼', [new Hiragana('ge', 'げ'), new Hiragana('nn', 'ん')]),
   }),
   methods: {
-    next(nowIndex: number) {
-      console.log(nowIndex);
+    next() {
+      console.log('owaowa');
     },
   },
 });

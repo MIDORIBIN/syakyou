@@ -7,11 +7,12 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Hiragana} from '../entity/hiragana';
+import {sleep} from "../util/promise-util";
 
 export default Vue.extend({
   props: {
     hiragana: Object,
-    promise: Object,
+    startFlag: Boolean,
   },
   data: () => ({
     text: '',
@@ -22,35 +23,29 @@ export default Vue.extend({
     },
   },
   methods: {
-    start(hiragana: Hiragana, index: number): Promise<number> {
-      return this.inputText(hiragana)
-        .then(() => index);
+    start(hiragana: Hiragana): Promise<void> {
+      return this.inputText(hiragana);
     },
     async inputText(hiragana: Hiragana): Promise<void> {
       // ローマ字入力
       const alphabetList = hiragana.hebon.split('').slice(0, -1);
       for (const alphabet of alphabetList) {
         this.text += alphabet;
-        await this.sleep(this.waitTime);
+        await sleep(this.waitTime);
       }
 
       // ひらがな
       this.text = this.text.slice(0, -alphabetList.length);
       this.text += hiragana.hiragana;
-      await this.sleep(this.waitTime);
-    },
-    sleep(waitSeconds: number) {
-      return new Promise((resolve: any) => {
-        setTimeout(() => {
-          resolve();
-        }, waitSeconds * 1000);
-      });
+      await sleep(this.waitTime);
     },
   },
   watch: {
-    promise(p: Promise<number>) {
-      p.then((index: number) => this.start(this.hiragana, index))
-        .then((index: number) => this.$emit('end', index));
+    startFlag(f: boolean) {
+      if (f) {
+        this.start(this.hiragana)
+          .then(() => this.$emit('end'));
+      }
     },
   },
 });
