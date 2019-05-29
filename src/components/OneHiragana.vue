@@ -7,7 +7,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Hiragana} from '../entity/hiragana';
-import {sleep} from "../util/promise-util";
+import {sleep} from '../util/promise-util';
 
 export default Vue.extend({
   props: {

@@ -16,7 +16,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import OneHiragana from './OneHiragana.vue';
-import {sleep} from "../util/promise-util";
+import {sleep} from '../util/promise-util';
 
 export default Vue.extend({
   components: {
@@ -55,7 +55,7 @@ export default Vue.extend({
       this.hiraganaToKanji();
       await sleep(1);
       this.$emit('end');
-    }
+    },
   },
   mounted() {
     this.initProgressList();
