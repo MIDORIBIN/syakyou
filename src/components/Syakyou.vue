@@ -25,10 +25,10 @@ export default Vue.extend({
     },
     next() {
       const nowIndex = this.searchNowIndex();
-      if (nowIndex >= this.kanjiListList.length) {
-        console.log('owaowa');
-        return;
-      }
+      // if (nowIndex >= this.kanjiListList.length) {
+      //   console.log('owaowa');
+      //   return;
+      // }
       this.progressList.splice(nowIndex, 1, true);
     },
     searchNowIndex(): number {

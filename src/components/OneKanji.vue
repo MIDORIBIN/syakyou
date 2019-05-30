@@ -8,7 +8,7 @@
     </template>
     <!--漢字-->
     <template v-if="!isHiragana">
-      <span>{{kanji.kanji}}</span>
+      <span :class="{ underbar: isUnderBar }">{{kanji.kanji}}</span>
     </template>
   </span>
 </template>
@@ -31,6 +31,7 @@ export default Vue.extend({
     resolveList: [] as Array<() => void>,
     progressList: [] as boolean[],
     isHiragana: true,
+    isUnderBar: true,
   }),
   methods: {
     initProgressList() {
@@ -56,12 +57,12 @@ export default Vue.extend({
     async endInputHiragana() {
       this.hiraganaToKanji();
       await sleep(sleepTime);
+      this.isUnderBar = false;
       this.$emit('end');
     },
   },
   mounted() {
     this.initProgressList();
-    // this.next();
   },
   watch: {
     startFlag(f: boolean) {
@@ -74,4 +75,7 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+  .underbar {
+    text-decoration: underline;
+  }
 </style>

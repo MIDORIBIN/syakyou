@@ -49,4 +49,7 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+  span {
+    text-decoration: underline;
+  }
 </style>
