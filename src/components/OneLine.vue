@@ -19,6 +19,7 @@ export default Vue.extend({
   }),
   props: {
     kanjiList: Object,
+    startFlag: Boolean,
   },
   methods: {
     initProgressList() {
@@ -27,10 +28,7 @@ export default Vue.extend({
     next() {
       const nowIndex = this.searchNowIndex();
       if (nowIndex >= this.kanjiList.length) {
-        // end
-        // this.endInputHiragana();
-        console.log('owaowa');
-        return;
+        this.$emit('end');
       }
       this.progressList.splice(nowIndex, 1, true);
     },
@@ -42,7 +40,14 @@ export default Vue.extend({
   },
   mounted() {
     this.initProgressList();
-    this.next();
+  },
+
+  watch: {
+    startFlag(f: boolean) {
+      if (f) {
+        this.next();
+      }
+    },
   },
 });
 </script>

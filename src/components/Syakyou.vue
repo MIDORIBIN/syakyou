@@ -1,6 +1,8 @@
 <template>
   <div>
-    <OneLine :kanjiList="kanjiListList[0]"></OneLine>
+    <template v-for="(kanjiList, index) in kanjiListList">
+      <OneLine :kanjiList="kanjiList" :startFlag="progressList[index]" @end="next"></OneLine>
+    </template>
   </div>
 </template>
 
@@ -15,7 +17,30 @@ export default Vue.extend({
   },
   data: () => ({
     kanjiListList: kyouten,
+    progressList: [] as boolean[],
   }),
+  methods: {
+    initProgressList() {
+      this.progressList = new Array<boolean>(this.kanjiListList.length).fill(false);
+    },
+    next() {
+      const nowIndex = this.searchNowIndex();
+      if (nowIndex >= this.kanjiListList.length) {
+        console.log('owaowa');
+        return;
+      }
+      this.progressList.splice(nowIndex, 1, true);
+    },
+    searchNowIndex(): number {
+      return this.progressList
+        .filter((flag: boolean) => flag)
+        .length;
+    },
+  },
+  mounted() {
+    this.initProgressList();
+    this.next();
+  },
 });
 </script>
 
