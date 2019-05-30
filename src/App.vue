@@ -1,19 +1,19 @@
 <template>
   <div id="app">
-      <OneLine></OneLine>
+      <Syakyou></Syakyou>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import HelloWorld from './components/HelloWorld.vue';
-import OneLine from './components/OneLine.vue';
+import Syakyou from './components/Syakyou.vue';
 
 export default Vue.extend({
   name: 'app',
   components: {
     HelloWorld,
-    OneLine,
+    Syakyou,
   },
 });
 </script>
