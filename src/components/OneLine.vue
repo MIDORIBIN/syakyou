@@ -19,8 +19,16 @@ export default Vue.extend({
   },
   data: () => ({
     kanjiList: [
-      new Kanji('無', [new Hiragana('mu', 'む')]),
-      new Kanji('眼', [new Hiragana('ge', 'げ'), new Hiragana('nn', 'ん')]),
+      new Kanji('摩', [new Hiragana('ma', 'ま')]),
+      new Kanji('訶', [new Hiragana('ka', 'か')]),
+      new Kanji('般', [new Hiragana('ha', 'は'), new Hiragana('nn', 'ん')]),
+      new Kanji('若', [new Hiragana('nya', 'にゃ')]),
+      new Kanji('波', [new Hiragana('ha', 'は')]),
+      new Kanji('羅', [new Hiragana('ra', 'ら')]),
+      new Kanji('蜜', [new Hiragana('mi', 'み')]),
+      new Kanji('多', [new Hiragana('ta', 'た')]),
+      new Kanji('心', [new Hiragana('si', 'し'), new Hiragana('nn', 'ん')]),
+      new Kanji('経', [new Hiragana('gyo', 'ぎょ'), new Hiragana('u', 'う')]),
     ],
     progressList: [] as boolean[],
   }),

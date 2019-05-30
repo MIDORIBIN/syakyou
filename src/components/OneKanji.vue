@@ -17,7 +17,7 @@
 import Vue from 'vue';
 import OneHiragana from './OneHiragana.vue';
 import {sleep} from '../util/promise-util';
-import {sleepTime} from "../util/sleep-time";
+import {sleepTime} from '../util/sleep-time';
 
 export default Vue.extend({
   components: {

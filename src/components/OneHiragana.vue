@@ -8,7 +8,7 @@
 import Vue from 'vue';
 import {Hiragana} from '../entity/hiragana';
 import {sleep} from '../util/promise-util';
-import {sleepTime} from "../util/sleep-time";
+import {sleepTime} from '../util/sleep-time';
 
 export default Vue.extend({
   props: {
@@ -19,8 +19,10 @@ export default Vue.extend({
     text: '',
   }),
   methods: {
-    start(hiragana: Hiragana): Promise<void> {
-      return this.inputText(hiragana);
+    async start(): Promise<void> {
+      await this.inputText(this.hiragana);
+      this.$emit('end');
+
     },
     async inputText(hiragana: Hiragana): Promise<void> {
       // ローマ字入力
@@ -39,8 +41,7 @@ export default Vue.extend({
   watch: {
     startFlag(f: boolean) {
       if (f) {
-        this.start(this.hiragana)
-          .then(() => this.$emit('end'));
+        this.start();
       }
     },
   },

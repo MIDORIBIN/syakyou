@@ -1,1 +1,1 @@
-export let sleepTime = 0.5;
+export let sleepTime = 0.1;
