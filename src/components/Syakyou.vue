@@ -1,8 +1,9 @@
 <template>
-  <div class="scroll-y" style="max-height: 300px;background: darkviolet">
+  <div class="scroll-y" style="max-height: 80vh;background: darkviolet">
     <template v-for="(kanjiList, index) in kanjiListList">
       <OneLine :kanjiList="kanjiList" :startFlag="progressList[index]" @end="next"></OneLine>
     </template>
+    {{state.count}}
   </div>
 </template>
 
@@ -10,35 +11,50 @@
 import Vue from 'vue';
 import OneLine from './OneLine.vue';
 import {kyouten} from '../util/kyouten';
+import {sleep} from '../util/promise-util';
+import {store} from '../store';
 
 export default Vue.extend({
   components: {
     OneLine,
   },
   data: () => ({
-    kanjiListList: kyouten,
+    kanjiListList: kyouten.concat(),
     progressList: [] as boolean[],
+    state: store.state,
   }),
   methods: {
     initProgressList() {
-      this.progressList = new Array<boolean>(this.kanjiListList.length).fill(false);
+      this.progressList.splice(0);
+      this.progressList.push(...new Array<boolean>(this.kanjiListList.length).fill(false));
     },
     next() {
       const nowIndex = this.searchNowIndex();
       this.progressList.splice(nowIndex, 1, true);
       this.toBottom();
+      if (nowIndex >= this.kanjiListList.length) {
+        this.reset();
+        store.increaseCount();
+      }
     },
     searchNowIndex(): number {
       return this.progressList
         .filter((flag: boolean) => flag)
         .length;
     },
-    toBottom() {
+    async toBottom() {
       const elem = this.$el;
       // 少し遅延させないとスクロールが一番したまで行かない
-      setTimeout(() => {
-        elem.scrollTop = 10000;
-      }, 5);
+      await sleep(0.001);
+      elem.scrollTop = 10000;
+    },
+    async reset() {
+      this.kanjiListList.splice(0);
+      await sleep(0.01);
+      this.kanjiListList.push(...kyouten);
+      this.initProgressList();
+      await sleep(0.01);
+      this.next();
     },
   },
   mounted() {

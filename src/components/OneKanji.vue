@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span :class="{ underbar: isUnderBar }">
     <!--ひらがな-->
     <template v-if="isHiragana">
       <template v-for="(hiragana, index) in kanji.hiraganaList">
@@ -8,7 +8,7 @@
     </template>
     <!--漢字-->
     <template v-if="!isHiragana">
-      <span :class="{ underbar: isUnderBar }">{{kanji.kanji}}</span>
+      <span>{{kanji.kanji}}</span>
     </template>
   </span>
 </template>
@@ -17,8 +17,8 @@
 import Vue, {PropType} from 'vue';
 import OneHiragana from './OneHiragana.vue';
 import {sleep} from '../util/promise-util';
-import {sleepTime} from '../util/sleep-time';
 import {Kanji} from '../entity/kanji';
+import {store} from '../store';
 
 export default Vue.extend({
   components: {
@@ -33,11 +33,12 @@ export default Vue.extend({
     progressList: [] as boolean[],
     isHiragana: true,
     isUnderBar: true,
+    state: store.state,
   }),
   methods: {
     initProgressList() {
-      // Array.prototype.push.apply(this.progressList, new Array<boolean>(this.kanji.hiraganaList.length).fill(false));
-      this.progressList = new Array<boolean>(this.kanji.hiraganaList.length).fill(false);
+      this.progressList.splice(0);
+      this.progressList.push(...new Array<boolean>(this.kanji.hiraganaList.length).fill(false));
     },
     next() {
       const nowIndex = this.searchNowIndex();
@@ -57,16 +58,14 @@ export default Vue.extend({
     },
     async endInputHiragana() {
       this.hiraganaToKanji();
-      await sleep(sleepTime);
+      await sleep(this.state.sleepTime);
       this.isUnderBar = false;
       this.$emit('end');
     },
   },
-  mounted() {
-    this.initProgressList();
-  },
   watch: {
     startFlag(f: boolean) {
+      this.initProgressList();
       if (f) {
         this.next();
       }

@@ -1,5 +1,5 @@
 <template>
-  <p class="display-1">
+  <p class="display-2 font-weight-bold">
     <template v-for="(kanji, index) in kanjiList">
       <OneKanji :kanji="kanji" :startFlag="progressList[index]" @end="next"></OneKanji>
     </template>
@@ -24,7 +24,8 @@ export default Vue.extend({
   },
   methods: {
     initProgressList() {
-      this.progressList = new Array<boolean>(this.kanjiList.length).fill(false);
+      this.progressList.splice(0);
+      this.progressList.push(...new Array<boolean>(this.kanjiList.length).fill(false));
     },
     next() {
       const nowIndex = this.searchNowIndex();
@@ -39,12 +40,9 @@ export default Vue.extend({
         .length;
     },
   },
-  mounted() {
-    this.initProgressList();
-  },
-
   watch: {
     startFlag(f: boolean) {
+      this.initProgressList();
       if (f) {
         this.next();
       }

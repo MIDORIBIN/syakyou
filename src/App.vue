@@ -1,6 +1,25 @@
 <template>
   <v-app>
-    <v-toolbar app>
+    <v-navigation-drawer
+            fixed
+            clipped
+            app
+    >
+      <v-list dense>
+        <v-list-tile @click="">
+          <v-list-tile-content>
+            <v-list-tile-title>
+              <div>aaa</div>
+            </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
+    <v-toolbar
+            fixed
+            clipped-left
+            app
+    >
       <v-toolbar-title class="headline text-uppercase">
         <span>Vuetify</span>
         <span class="font-weight-light">MATERIAL DESIGN</span>
