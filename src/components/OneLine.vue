@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <p>
     <template v-for="(kanji, index) in kanjiList">
       <OneKanji :kanji="kanji" :startFlag="progressList[index]" @end="next"></OneKanji>
     </template>
-  </div>
+  </p>
 </template>
 
 <script lang="ts">

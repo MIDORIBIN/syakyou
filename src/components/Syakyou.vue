@@ -45,4 +45,9 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+  div {
+    overflow: auto;
+    height: 20vh;
+    background: #ff5c83
+  }
 </style>
