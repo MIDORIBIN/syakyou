@@ -1,5 +1,5 @@
 <template>
-  <div class="scroll-y" style="max-height:15vh;background: darkviolet">
+  <div class="scroll-y" style="max-height: 300px;background: darkviolet">
     <template v-for="(kanjiList, index) in kanjiListList">
       <OneLine :kanjiList="kanjiList" :startFlag="progressList[index]" @end="next"></OneLine>
     </template>

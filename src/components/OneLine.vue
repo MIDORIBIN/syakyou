@@ -1,5 +1,5 @@
 <template>
-  <p>
+  <p class="display-1">
     <template v-for="(kanji, index) in kanjiList">
       <OneKanji :kanji="kanji" :startFlag="progressList[index]" @end="next"></OneKanji>
     </template>
@@ -54,4 +54,8 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css?family=Sawarabi+Mincho&display=swap');
+span {
+  font-family: 'Sawarabi Mincho', sans-serif;
+}
 </style>

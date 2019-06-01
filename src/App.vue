@@ -29,10 +29,8 @@ export default {
   components: {
     Syakyou,
   },
-  data() {
-    return {
-      //
-    };
-  },
 };
 </script>
+
+<style>
+</style>
