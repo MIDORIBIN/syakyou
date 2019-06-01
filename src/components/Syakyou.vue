@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="scroll-y" style="max-height:15vh;background: darkviolet">
     <template v-for="(kanjiList, index) in kanjiListList">
       <OneLine :kanjiList="kanjiList" :startFlag="progressList[index]" @end="next"></OneLine>
     </template>
@@ -25,16 +25,20 @@ export default Vue.extend({
     },
     next() {
       const nowIndex = this.searchNowIndex();
-      // if (nowIndex >= this.kanjiListList.length) {
-      //   console.log('owaowa');
-      //   return;
-      // }
       this.progressList.splice(nowIndex, 1, true);
+      this.toBottom();
     },
     searchNowIndex(): number {
       return this.progressList
         .filter((flag: boolean) => flag)
         .length;
+    },
+    toBottom() {
+      const elem = this.$el;
+      // 少し遅延させないとスクロールが一番したまで行かない
+      setTimeout(() => {
+        elem.scrollTop = 10000;
+      }, 5);
     },
   },
   mounted() {
@@ -45,9 +49,4 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-  div {
-    overflow: auto;
-    height: 20vh;
-    background: #ff5c83
-  }
 </style>

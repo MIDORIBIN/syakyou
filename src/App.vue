@@ -16,18 +16,18 @@
     </v-toolbar>
 
     <v-content>
-      <HelloWorld/>
+      <Syakyou></Syakyou>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Syakyou from './components/Syakyou';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+    Syakyou,
   },
   data() {
     return {
