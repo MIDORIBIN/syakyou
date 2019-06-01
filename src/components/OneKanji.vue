@@ -14,17 +14,18 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, {PropType} from 'vue';
 import OneHiragana from './OneHiragana.vue';
 import {sleep} from '../util/promise-util';
 import {sleepTime} from '../util/sleep-time';
+import {Kanji} from '../entity/kanji';
 
 export default Vue.extend({
   components: {
     OneHiragana,
   },
   props: {
-    kanji: Object,
+    kanji: Object as PropType<Kanji>,
     startFlag: Boolean,
   },
   data: () => ({

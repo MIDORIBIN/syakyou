@@ -5,14 +5,14 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, {PropType} from 'vue';
 import {Hiragana} from '../entity/hiragana';
 import {sleep} from '../util/promise-util';
 import {sleepTime} from '../util/sleep-time';
 
 export default Vue.extend({
   props: {
-    hiragana: Object,
+    hiragana: Object as PropType<Hiragana>,
     startFlag: Boolean,
   },
   data: () => ({

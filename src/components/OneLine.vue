@@ -7,8 +7,9 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, {PropType} from 'vue';
 import OneKanji from './OneKanji.vue';
+import {Kanji} from '../entity/kanji';
 
 export default Vue.extend({
   components: {
@@ -18,7 +19,7 @@ export default Vue.extend({
     progressList: [] as boolean[],
   }),
   props: {
-    kanjiList: Object,
+    kanjiList: Array as PropType<Kanji[]>,
     startFlag: Boolean,
   },
   methods: {
