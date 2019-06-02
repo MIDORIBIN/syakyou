@@ -1,10 +1,13 @@
 <template>
-  <div class="scroll-y" style="max-height: 80vh;background: darkviolet">
-    <template v-for="(kanjiList, index) in kanjiListList">
-      <OneLine :kanjiList="kanjiList" :startFlag="progressList[index]" @end="next"></OneLine>
-    </template>
-    {{state.count}}
-  </div>
+  <v-container class="scroll-y" id="container">
+    <v-layout>
+      <div>
+        <template v-for="(kanjiList, index) in kanjiListList">
+          <OneLine :kanjiList="kanjiList" :startFlag="progressList[index]" @end="next"></OneLine>
+        </template>
+      </div>
+    </v-layout>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -65,4 +68,7 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+  #container {
+    height: calc(100vh - 64px);
+  }
 </style>

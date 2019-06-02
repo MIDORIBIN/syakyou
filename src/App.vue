@@ -5,15 +5,7 @@
             clipped
             app
     >
-      <v-list dense>
-        <v-list-tile @click="">
-          <v-list-tile-content>
-            <v-list-tile-title>
-              <div>aaa</div>
-            </v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
+      <SideBar></SideBar>
     </v-navigation-drawer>
     <v-toolbar
             fixed
@@ -42,11 +34,13 @@
 
 <script>
 import Syakyou from './components/Syakyou';
+import SideBar from './components/SideBar';
 
 export default {
   name: 'App',
   components: {
     Syakyou,
+    SideBar,
   },
 };
 </script>
