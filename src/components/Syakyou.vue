@@ -1,13 +1,15 @@
 <template>
-  <v-container class="scroll-y" id="container">
-    <v-layout>
-      <div>
-        <template v-for="(kanjiList, index) in kanjiListList">
-          <OneLine :kanjiList="kanjiList" :startFlag="progressList[index]" @end="next"></OneLine>
-        </template>
-      </div>
-    </v-layout>
-  </v-container>
+  <div class="pa-4 teal lighten-2">
+    <v-container ref="innerContainer" class="grey lighten-2 scroll-y max-height">
+      <v-layout>
+        <div>
+          <template v-for="(kanjiList, index) in kanjiListList">
+            <OneLine :kanjiList="kanjiList" :startFlag="progressList[index]" @end="next"></OneLine>
+          </template>
+        </div>
+      </v-layout>
+    </v-container>
+  </div>
 </template>
 
 <script lang="ts">
@@ -46,9 +48,11 @@ export default Vue.extend({
         .length;
     },
     async toBottom() {
-      const elem = this.$el;
+      // const elem = this.$el;
+      const elem = this.$refs.innerContainer;
       // 少し遅延させないとスクロールが一番したまで行かない
       await sleep(0.001);
+      console.log(elem.scrollTop);
       elem.scrollTop = 10000;
     },
     async reset() {
@@ -68,7 +72,7 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-  #container {
-    height: calc(100vh - 64px);
+  .max-height {
+    height: calc(100vh - 64px - 24px * 2);
   }
 </style>
