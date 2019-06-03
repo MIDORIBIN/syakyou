@@ -1,12 +1,13 @@
 <template>
   <v-flex xs12>
-    <v-card color="blue-grey darken-2" class="white--text">
+    <v-card color="light-blue darken-2" class="white--text">
       <v-card-title primary-title>
         <div class="headline">タイピング速度</div>
         <v-slider
                 v-model="slider"
                 :min="1"
                 :max="10"
+                color="white"
         ></v-slider>
       </v-card-title>
     </v-card>

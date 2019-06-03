@@ -1,16 +1,11 @@
 <template>
   <v-app>
-    <v-navigation-drawer
-            fixed
-            clipped
-            app
-    >
-      <SideBar></SideBar>
-    </v-navigation-drawer>
+    <SideBar></SideBar>
     <v-toolbar
             fixed
             clipped-left
             app
+            color="indigo"
     >
       <v-toolbar-title class="headline text-uppercase">
         <span>Vuetify</span>

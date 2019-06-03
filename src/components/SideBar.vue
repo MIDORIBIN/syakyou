@@ -1,13 +1,13 @@
 <template>
-  <v-container
-          fluid
-          grid-list-lg
+  <v-navigation-drawer
+          fixed
+          clipped
+          app
+          class="cyan darken-2"
   >
-    <v-layout row wrap>
-      <SyakyouCount></SyakyouCount>
-      <SleepTimeSlider></SleepTimeSlider>
-    </v-layout>
-  </v-container>
+    <SyakyouCount></SyakyouCount>
+    <SleepTimeSlider></SleepTimeSlider>
+  </v-navigation-drawer>
 </template>
 
 <script lang="ts">
