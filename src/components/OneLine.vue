@@ -1,9 +1,9 @@
 <template>
-  <p class="display-2 font-weight-bold">
+  <div class="display-2 font-weight-bold">
     <template v-for="(kanji, index) in kanjiList">
       <OneKanji :kanji="kanji" :startFlag="progressList[index]" @end="next"></OneKanji>
     </template>
-  </p>
+  </div>
 </template>
 
 <script lang="ts">
@@ -52,8 +52,8 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css?family=Sawarabi+Mincho&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+TC&display=swap');
 span {
-  font-family: 'Sawarabi Mincho', sans-serif;
+  font-family: 'Noto Serif TC', serif;
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
   <div class="pa-4 teal lighten-2">
-    <v-container ref="innerContainer" class="grey lighten-2 scroll-y max-height">
+    <v-container ref="innerContainer" class="grey lighten-2 scroll-y max-height scrollbar_none">
       <v-layout>
-        <div>
+        <v-flex>
           <template v-for="(kanjiList, index) in kanjiListList">
             <OneLine :kanjiList="kanjiList" :startFlag="progressList[index]" @end="next"></OneLine>
           </template>
-        </div>
+        </v-flex>
       </v-layout>
     </v-container>
   </div>
@@ -24,7 +24,7 @@ export default Vue.extend({
     OneLine,
   },
   data: () => ({
-    kanjiListList: kyouten.concat(),
+    kanjiListList: [...kyouten],
     progressList: [] as boolean[],
     state: store.state,
   }),
@@ -48,11 +48,9 @@ export default Vue.extend({
         .length;
     },
     async toBottom() {
-      // const elem = this.$el;
-      const elem = this.$refs.innerContainer;
       // 少し遅延させないとスクロールが一番したまで行かない
       await sleep(0.001);
-      console.log(elem.scrollTop);
+      const elem: any = this.$refs.innerContainer;
       elem.scrollTop = 10000;
     },
     async reset() {
@@ -73,6 +71,12 @@ export default Vue.extend({
 
 <style scoped>
   .max-height {
-    height: calc(100vh - 64px - 24px * 2);
+      height: calc(100vh - 64px - 24px * 2);
+  }
+  .scrollbar_none{
+      overflow-y:auto;
+  }
+  .scrollbar_none::-webkit-scrollbar{
+      display:none;
   }
 </style>
